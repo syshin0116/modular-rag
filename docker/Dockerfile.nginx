@@ -1,0 +1,5 @@
+# Nginx 이미지를 사용
+FROM nginx
+
+# Nginx 설정 파일을 복사
+COPY ./docker/nginx.conf /etc/nginx/nginx.conf

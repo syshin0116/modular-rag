@@ -1,0 +1,19 @@
+# FastAPI Dockerfile
+FROM python:3.11-slim
+
+WORKDIR /code
+
+# Poetry 설치
+RUN pip install poetry
+
+# pyproject.toml 및 poetry.lock 복사
+COPY ./pyproject.toml ./poetry.lock /code/
+
+# 의존성 설치
+RUN poetry install --no-root
+
+# FastAPI 소스 코드 복사
+COPY ./fastapi/ /code
+
+# FastAPI 서버 실행
+CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]

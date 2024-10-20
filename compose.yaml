@@ -1,47 +1,52 @@
-version: '3.8'
-
 services:
   nginx:
-    image: nginx:alpine
-    container_name: nginx_server
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.nginx
+    container_name: nginx
     ports:
       - "80:80"
     volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./docker/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - fastapi
 
   fastapi:
-    build: .
-    container_name: fastapi_app
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.fastapi
+    container_name: fastapi
     ports:
       - "8000:8000"
-    develop:
-      watch:
-        - action: sync
-          path: .
-          target: /app
+    env_file:
+      - ./.env                       # 루트 디렉토리의 .env 파일 참조
     environment:
       - POETRY_VIRTUALENVS_CREATE=false
     depends_on:
       - redis
       - mysql
+    develop:
+      watch:
+        - action: sync
+          path: .
+          target: /app
     command: ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   redis:
     image: redis:alpine
-    container_name: redis_cache
+    container_name: redis
     ports:
       - "6379:6379"
 
   mysql:
     image: mysql:8.0
-    container_name: mysql_db
+    container_name: mysql
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      TZ: ${TZ}
     ports:
       - "3306:3306"
     volumes:
