@@ -16,10 +16,12 @@ services:
       context: .
       dockerfile: ./docker/Dockerfile.fastapi
     container_name: fastapi
+    volumes:
+      - ./fastapi:/code
     ports:
       - "8000:8000"
     env_file:
-      - ./.env                       # 루트 디렉토리의 .env 파일 참조
+      - ./.env
     environment:
       - POETRY_VIRTUALENVS_CREATE=false
     depends_on:
@@ -27,9 +29,15 @@ services:
       - mysql
     develop:
       watch:
-        - action: sync
-          path: .
-          target: /app
+        - action: sync+restart
+          path: ./
+          target: /code
+        - action: sync+restart
+          path: ./poetry.lock
+          target: /code/poetry.lock
+        - action: sync+restart
+          path: ./pyproject.toml
+          target: /code/pyproject.toml
     command: ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
 
   redis:

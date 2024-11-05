@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Podly - 랜딩페이지</title>
+    <style>
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        .left-panel {
+            flex: 1;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .right-panel {
+            flex: 1;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 200px;
+            height: auto;
+            max-width: 100%;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 2rem;
+            text-align: left;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .feature-list li {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn img {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+        }
+
+        .btn-google {
+            background-color: #ffffff;
+            color: #757575;
+            border: 1px solid #dadce0;
+        }
+
+        .btn-naver {
+            background-color: #03c75a;
+            color: white;
+        }
+
+        .btn-kakao {
+            background-color: #FEE500;
+            color: #000000;
+        }
+
+        .btn-demo {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .divider {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #e0e0e0;
+        }
+
+        .divider span {
+            position: relative;
+            background-color: white;
+            padding: 0 10px;
+            color: #757575;
+            font-size: 14px;
+        }
+
+        #error-message {
+            color: #e74c3c;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+
+        .top-logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .top-logo img {
+            max-height: 25px;
+        }
+
+        @media (min-width: 769px) {
+            .container {
+                flex-direction: row;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+
+            .left-panel,
+            .right-panel {
+                flex: none;
+                width: 100%;
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            p,
+            .feature-list li {
+                font-size: 1rem;
+            }
+
+            .top-logo {
+                top: 10px;
+                left: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                width: 150px;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-logo">
+        <img src="https://podly.fun/chatbot/logo?theme=light" alt="logo">
+    </div>
+    <div class="container">
+        <div class="left-panel">
+            <img src="https://i.imgur.com/h2i0R3r.png" alt="Podly 로고" class="logo">
+            <h1>Podly: 당신만의 AI 음성 뉴스 어시스턴트</h1>
+            <p>최첨단 AI 기술로 당신의 일상에 맞춤형 정보를 제공하는 혁신적인 서비스입니다.</p>
+            <ul class="feature-list">
+                <li>AI 기반 맞춤형 뉴스 큐레이션</li>
+                <li>고품질 AI 음성 변환으로 자연스러운 청취 경험</li>
+                <li>대화형 정보 탐색으로 깊이 있는 컨텐츠 제공</li>
+            </ul>
+            <p>지금 바로 Podly와 함께 스마트하고 효율적인 정보 소비 습관을 만들어보세요!</p>
+        </div>
+        <div class="right-panel">
+            <div class="login-container">
+                <h2>시작하기</h2>
+                <button class="btn btn-google" id="google-login-btn">
+                    <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">Google로 계속하기
+                </button>
+                <button class="btn btn-naver" id="naver-login-btn">
+                    <img src="https://i.imgur.com/cZfqqos.png" alt="Naver"> 네이버로 계속하기
+                </button>
+                <button class="btn btn-kakao" id="kakao-login-btn">
+                    <img src="https://i.imgur.com/6LM3PMM.png" alt="Kakao"> 카카오로 계속하기
+                </button>
+                <div class="divider">
+                    <span>또는</span>
+                </div>
+                <button class="btn btn-demo" id="demo-login-btn">데모 계정으로 체험하기</button>
+                <div id="error-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function handleSocialLogin(provider) {
+            const button = document.getElementById(`${provider}-login-btn`);
+            const errorMessage = document.getElementById('error-message');
+
+            button.disabled = true;
+            errorMessage.textContent = '';
+
+            try {
+                const response = await fetch(`/auth/login/${provider}`);
+                const data = await response.json();
+
+                if (response.ok) {
+                    if (data.url) {
+                        window.location.href = data.url;
+                    } else if (data.success) {
+                        window.location.href = "/chatbot";
+                    } else {
+                        throw new Error('Unexpected server response');
+                    }
+                } else {
+                    throw new Error(data.message || '로그인 처리 중 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                errorMessage.textContent = error.message || '로그인 중 오류가 발생했습니다. 다시 시도해 주세요.';
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        document.getElementById("google-login-btn").addEventListener("click", () => handleSocialLogin('google'));
+        document.getElementById("naver-login-btn").addEventListener("click", () => handleSocialLogin('naver'));
+        document.getElementById("kakao-login-btn").addEventListener("click", () => handleSocialLogin('kakao'));
+
+        document.getElementById("demo-login-btn").addEventListener("click", function () {
+            window.location.href = "/chatbot";
+        });
+    </script>
+</body>
+
+</html>

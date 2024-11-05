@@ -7,7 +7,7 @@ WORKDIR /code
 RUN pip install poetry
 
 # pyproject.toml 및 poetry.lock 복사
-COPY ./pyproject.toml ./poetry.lock /code/
+COPY ./fastapi/pyproject.toml ./fastapi/poetry.lock /code/
 
 # 의존성 설치
 RUN poetry install --no-root
@@ -16,4 +16,4 @@ RUN poetry install --no-root
 COPY ./fastapi/ /code
 
 # FastAPI 서버 실행
-CMD ["poetry", "run", "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
