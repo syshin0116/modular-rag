@@ -7,6 +7,9 @@ from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 from app.user import user_router
+from app.kakao import chat_router
+from app.chat_session import chat_session_router
+from app.chat_message import chat_message_router
 from app.configs.settings import settings
 from app.configs.mysql import init_db
 from starlette.middleware.sessions import SessionMiddleware
@@ -63,6 +66,13 @@ def create_app() -> FastAPI:
 
     # Routers
     api_router.include_router(user_router.router, prefix="/users", tags=["users"])
+    api_router.include_router(
+        chat_session_router.router, prefix="/chat_sessions", tags=["chat sessions"]
+    )
+    api_router.include_router(
+        chat_message_router.router, prefix="/chat_messages", tags=["chat messages"]
+    )
+    api_router.include_router(chat_router.router, prefix="/chat", tags=["chat"])
 
     # Health Check Endpoint
     @app.get("/health", tags=["Health Check"])
