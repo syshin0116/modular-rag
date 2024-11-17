@@ -6,7 +6,7 @@ import enum
 from uuid import uuid4
 
 
-class MessageSender(str, enum.Enum):
+class MessageSenderType(str, enum.Enum):
     USER = "user"
     BOT = "bot"
 
@@ -18,6 +18,7 @@ class ChatMessage(Base):
     session_id = Column(
         String(36), ForeignKey("chat_sessions.id", ondelete="CASCADE"), nullable=False
     )
-    sender = Column(Enum(MessageSender), nullable=False)
+    sender_type = Column(Enum(MessageSenderType), nullable=False)
+    sender = Column(Text, nullable=False)
     content = Column(Text, nullable=False)
     timestamp = Column(DateTime(timezone=True), server_default=func.now())
