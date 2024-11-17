@@ -38,7 +38,7 @@ jobs:
     # 4. Docker Compose로 이미지 빌드
     - name: Build Docker images
       run: |
-        docker-compose build
+        docker compose build
 
     # 5. Docker 이미지 푸시
     - name: Push Docker images to Docker Hub
