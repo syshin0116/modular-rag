@@ -53,7 +53,9 @@ jobs:
         host: ${{ secrets.GCP_IP }}
         username: ${{ secrets.GCP_USERNAME }}
         key: ${{ secrets.GCP_SSH_KEY }}
+        port: 22
         script: |
           cd /home/syshin0116/modular-rag
           docker compose pull
           docker compose up -d --remove-orphans
+        debug: true
