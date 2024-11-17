@@ -3,7 +3,7 @@ name: CI/CD to Docker Hub, GCP Server
 on:
   push:
     branches:
-      - main  # main 브랜치에 Push될 때 실행
+      - main  # main 브랜치에 Push 시 실행
 
 jobs:
   deploy:
@@ -18,7 +18,7 @@ jobs:
     - name: Log in to Docker Hub
       run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-    # 3. Docker Compose 설치
+    # 3. Docker, Docker Compose 설치
     - name: Install Docker and Docker Compose
       run: |
         # Add Docker's official GPG key:
