@@ -1,4 +1,4 @@
-name: CI/CD to Docker Hub and GCP
+name: CI/CD to Docker Hub, GCP Server
 
 on:
   push:
@@ -36,7 +36,7 @@ jobs:
         docker push syshin0116/modular-rag:nginx-latest
 
     # 6. GCP 서버로 배포
-    - name: Deploy to GCP
+    - name: Deploy to GCP Server
       uses: appleboy/ssh-action@v0.1.3
       with:
         host: ${{ secrets.GCP_IP }}
