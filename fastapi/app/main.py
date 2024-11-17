@@ -16,7 +16,6 @@ from starlette.middleware.sessions import SessionMiddleware
 from app.configs.redis import redis_client
 import os
 
-
 # Logging Settings
 logging.config.dictConfig(settings.LOGGING)
 logger = logging.getLogger(__name__)
