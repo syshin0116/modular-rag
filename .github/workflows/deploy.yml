@@ -48,12 +48,12 @@ jobs:
 
     # 6. GCP 서버로 배포
     - name: Deploy to GCP Server
-      uses: appleboy/ssh-action@v0.1.3
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.GCP_IP }}
         username: ${{ secrets.GCP_USERNAME }}
         key: ${{ secrets.GCP_SSH_KEY }}
         script: |
           cd /home/syshin0116/modular-rag
-          docker-compose pull
-          docker-compose up -d --remove-orphans
+          docker compose pull
+          docker compose up -d --remove-orphans
