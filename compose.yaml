@@ -3,7 +3,8 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile.nginx
-    container_name: nginx
+    image: syshin0116/modular-rag:nginx-latest
+    container_name: ${PROJECT_NAME}-nginx
     ports:
       - "80:80"
     volumes:
@@ -15,50 +16,80 @@ services:
     build:
       context: .
       dockerfile: ./docker/Dockerfile.fastapi
-    container_name: fastapi
+    image: syshin0116/modular-rag:fastapi-latest
+    container_name: ${PROJECT_NAME}-fastapi
     volumes:
       - ./fastapi:/code
     ports:
       - "8000:8000"
+    expose:
+      - 8000
     env_file:
       - ./.env
     environment:
       - POETRY_VIRTUALENVS_CREATE=false
     depends_on:
-      - redis
-      - mysql
-    develop:
-      watch:
-        - action: sync+restart
-          path: ./
-          target: /code
-        - action: sync+restart
-          path: ./poetry.lock
-          target: /code/poetry.lock
-        - action: sync+restart
-          path: ./pyproject.toml
-          target: /code/pyproject.toml
-    command: ["poetry", "run", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - backnet
+      - frontnet
 
   redis:
     image: redis:alpine
-    container_name: redis
+    container_name: ${PROJECT_NAME}-redis
+    networks:
+      - backnet
+    expose:
+      - 6379
     ports:
       - "6379:6379"
+    volumes:
+      - redis-data:/data
 
   mysql:
     image: mysql:8.0
-    container_name: mysql
+    container_name: ${PROJECT_NAME}-mysql
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    restart: always
+    healthcheck:
+      test: ['CMD-SHELL', 'mysqladmin ping -h 127.0.0.1 --password="$$(cat /run/secrets/db-password)" --silent']
+      interval: 3s
+      retries: 5
+      start_period: 30s
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
       TZ: ${TZ}
+    networks:
+      - backnet
     ports:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
 
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: podly-certbot
+  #   volumes:
+  #     - ./certbot/conf:/etc/letsencrypt
+  #     - ./certbot/www:/var/www/certbot
+  #   depends_on:
+  #     - nginx
+  #   command: certonly --webroot -w /var/www/certbot --force-renewal --email syshin0116@gmail.com -d podly.fun -d www.podly.fun --agree-tos
+
 volumes:
+  redis-data:
   mysql_data:
+
+networks:
+  backnet:
+    driver: bridge
+  frontnet:
+    driver: bridge
