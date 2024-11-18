@@ -44,7 +44,6 @@ jobs:
     - name: Push Docker images to Docker Hub
       run: |
         docker push syshin0116/modular-rag:fastapi-latest
-        docker push syshin0116/modular-rag:nginx-latest
 
     # 6. GCP 서버로 배포
     - name: Deploy to GCP Server
